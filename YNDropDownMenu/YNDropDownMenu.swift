@@ -22,6 +22,8 @@ public enum YNStatus {
 
 /// Main Class for YNDropDownMenu
 open class YNDropDownMenu: UIView, YNDropDownDelegate {
+    //是否自定义，自己添加的
+    open var isCustom: Bool = false
     internal var opened: Bool = false
     internal var openedIndex: Int = 0
     
@@ -592,7 +594,18 @@ open class YNDropDownMenu: UIView, YNDropDownDelegate {
         for i in 0..<numberOfMenu {
             // Setup button
             if let button = dropDownButtons?[i] {
-                button.frame = CGRect(x: eachWidth * CGFloat(i), y: 0.0, width: eachWidth, height: CGFloat(menuHeight))
+                if isCustom {
+                    let customWidth: CGFloat = 84
+                    let customHeight: CGFloat = 25
+                    let lineSpace: CGFloat = 10
+                    button.frame = CGRect(x: customWidth * CGFloat(i)+lineSpace*(CGFloat(i)+1), y: (menuHeight-customHeight)/2, width: customWidth, height: customHeight)
+                    button.layer.borderColor = UIColor(red: 0.87, green: 0.87, blue: 0.87, alpha: 1).cgColor
+                    button.layer.borderWidth = 1
+                    button.layer.cornerRadius = customHeight/2
+                    button.layer.masksToBounds = true
+                }else{
+                    button.frame = CGRect(x: eachWidth * CGFloat(i), y: 0.0, width: eachWidth, height: CGFloat(menuHeight))
+                }
             }
             // Setup Views
             if let _dropDownView = dropDownViews?[i] {
